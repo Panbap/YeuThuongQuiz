@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Website YeuThuongQuiz - nơi chia sẻ tình yêu thương.">
+    <title>Mylove</title>
+    <link rel="icon" href="https://github.com/Panbap/anh/blob/main/icon1.png?raw=true" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Mali&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@700&display=swap" rel="stylesheet" />
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            box-sizing: border-box;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        * {
+            box-sizing: inherit;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: white;
+            overflow-x: hidden;
+            position: relative;
+            transition: background-color 0.8s ease;
+        }
+
+        #fixed-area {
+            padding: 10px;
+            width: 350px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        #main-img {
+            width: 350px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        #text {
+            font-size: 24px;
+            margin: 20px auto 0;
+            text-align: center;
+            font-family: 'Be Vietnam Pro', sans-serif;
+            font-weight: 700;
+            color: #333333;
+            text-shadow: 1px 1px 0 #e4e4e4;
+            white-space: normal;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            max-width: 100%;
+            display: block;
+
+        }
+
+        #button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            gap: 10px;
+            padding: 10px;
+        }
+
+        #yes-btn {
+            background: linear-gradient(45deg, #4CAF50, #81C784);
+            box-shadow: 0 4px 10px rgba(72, 180, 97, 0.6);
+            transition: all 0.3s ease;
+            font-size: 16px;
+            padding: 12px 24px;
+            cursor: pointer;
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-weight: 600;
+            animation: jump 3s ease-in-out infinite;
+        }
+
+        #yes-btn:hover {
+            background: linear-gradient(45deg, #388E3C, #66BB6A);
+            box-shadow: 0 6px 14px rgba(56, 142, 60, 0.8);
+        }
+
+        #no-btn {
+            background: linear-gradient(45deg, #E53935, #EF9A9A);
+            box-shadow: 0 4px 10px rgba(229, 57, 53, 0.6);
+            transition: all 0.3s ease;
+            font-size: 16px;
+            padding: 12px 24px;
+            cursor: pointer;
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-weight: 600;
+        }
+
+        #no-btn:hover {
+            background: linear-gradient(45deg, #B71C1C, #E57373);
+            box-shadow: 0 6px 14px rgba(183, 28, 28, 0.8);
+        }
+
+        @keyframes jump {
+
+            0%,
+            25%,
+            75%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .falling-text {
+            position: fixed;
+            top: -10vh;
+            font-family: 'Mali', cursive;
+            animation-name: fall;
+            animation-timing-function: linear;
+            animation-fill-mode: forwards;
+            pointer-events: none;
+            user-select: none;
+            white-space: nowrap;
+            color: #ff6f6f;
+            text-shadow: 0 0 5px #9eb5ff;
+        }
+
+        @keyframes fall {
+            0% {
+                top: -10vh;
+            }
+
+            100% {
+                top: 100vh;
+            }
+        }
+
+        @keyframes starBlink {
+
+            0%,
+            100% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 400px) {
+            #text {
+                margin-top: 20px;
+                font-size: 6vw;
+            }
+
+
+            #yes-btn,
+            #no-btn {
+                font-size: 5vw;
+                padding: 4vw 6vw;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="fixed-area">
+        <img id="main-img" src="./assets/images/1.gif" alt="Hình ảnh" />
+        <div id="text">Em làm người yêu anh nhé!</div>
+    </div>
+
+    <div id="button-container">
+        <button id="yes-btn">Dạ</button>
+        <button id="no-btn">Hông</button>
+    </div>
+
+    <script src="./assets/YeuThuongQuiz.js"> </script>
+
+</body>
+
+</html>

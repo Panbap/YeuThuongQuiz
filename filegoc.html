@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mylove</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mali&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: white;
+            overflow-x: hidden;
+            position: relative;
+            transition: background-color 0.8s ease;
+        }
+
+        #fixed-area {
+            width: 350px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        #main-img {
+            width: 350px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        #text {
+            margin-top: 20px;
+            font-size: 28px;
+            text-align: center;
+            font-family: 'Be Vietnam Pro', sans-serif;
+            font-weight: 700;
+            color: #333333;
+            text-shadow: 1px 1px 0 #e4e4e4;
+            white-space: nowrap;
+        }
+
+        #button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            gap: 10px;
+            padding: 10px;
+        }
+
+        #yes-btn {
+            background: linear-gradient(45deg, #4CAF50, #81C784);
+            box-shadow: 0 4px 10px rgba(72, 180, 97, 0.6);
+            transition: all 0.3s ease;
+            font-size: 16px;
+            padding: 12px 24px;
+            cursor: pointer;
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-weight: 600;
+            animation: jump 3s ease-in-out infinite;
+        }
+
+        #yes-btn:hover {
+            background: linear-gradient(45deg, #388E3C, #66BB6A);
+            box-shadow: 0 6px 14px rgba(56, 142, 60, 0.8);
+        }
+
+        #no-btn {
+            background: linear-gradient(45deg, #E53935, #EF9A9A);
+            box-shadow: 0 4px 10px rgba(229, 57, 53, 0.6);
+            transition: all 0.3s ease;
+            font-size: 16px;
+            padding: 12px 24px;
+            cursor: pointer;
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-weight: 600;
+        }
+
+        #no-btn:hover {
+            background: linear-gradient(45deg, #B71C1C, #E57373);
+            box-shadow: 0 6px 14px rgba(183, 28, 28, 0.8);
+        }
+
+        @keyframes jump {
+
+            0%,
+            25%,
+            75%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .falling-text {
+            position: fixed;
+            top: -10vh;
+            font-family: 'Mali', cursive;
+            animation-name: fall;
+            animation-timing-function: linear;
+            animation-fill-mode: forwards;
+            pointer-events: none;
+            user-select: none;
+            white-space: nowrap;
+            color: #ff6f6f;
+            text-shadow:
+                0 0 5px #9eb5ff;
+        }
+
+        @keyframes fall {
+            0% {
+                top: -10vh;
+            }
+
+            100% {
+                top: 100vh;
+            }
+        }
+
+        @keyframes starBlink {
+
+            0%,
+            100% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="fixed-area">
+        <img id="main-img" src="../assets/images/1.gif" alt="Hình ảnh" />
+        <div id="text">Anh làm người yêu em nhé!</div> <!-- Sửa lời nhắn chính ở đây -->
+    </div>
+
+    <div id="button-container">
+        <button id="yes-btn">Vâng</button> <!-- Nút xác nhận đồng ý -->
+        <button id="no-btn">Không</button> <!-- Nút từ chối  -->
+    </div>
+    <div id="particles-js"></div>
+
+    <script>
+        const textElement = document.getElementById('text');
+        const yesBtn = document.getElementById('yes-btn');
+        const noBtn = document.getElementById('no-btn');
+        const imgElement = document.getElementById('main-img');
+        const buttonContainer = document.getElementById('button-container');
+
+        // Bỏ phần cmt để hiển thị lời nhắn chính chuyển tiếp
+        const noTexts = [
+        "Anh chắc chưa đó?",
+          "Cục cưng ơi",
+          "Đừng làm vậy với em",
+          "Tim em đang tan vỡ",
+          "Em sắp khóc rồi đó"
+        ];
+
+        //Sửa câu trả lời nút từ chối
+        const noText = [
+            "Thật sao anh",
+            "Anh chắc chưa đó?",
+            "Đừng làm vậy với Em",
+            "Tim em đang tan vỡ",
+            "Em sắp khóc rồi đó"
+        ];
+
+        // Ảnh chuyển thiếp khi ấn nút từ chối
+        const noImgs = [
+            "../assets/images/2.gif",
+            "../assets/images/3.gif",
+            "../assets/images/4.gif",
+            "../assets/images/5.gif",
+            "../assets/images/6.gif"
+        ];
+
+        let noClickCount = 0;
+        let yesFontSize = 16;
+
+        noBtn.addEventListener('click', () => {
+            if (noClickCount < noText.length) {
+
+                // Bỏ phần cmt để hiển thị lời nhắn chính chuyển tiếp
+                textElement.innerText = noTexts[noClickCount];
+                imgElement.src = noImgs[noClickCount];
+                noBtn.innerText = noText[noClickCount];
+                noClickCount++;
+
+                yesFontSize += 20;
+                yesBtn.style.fontSize = yesFontSize + "px";
+                yesBtn.style.padding = (10 + noClickCount * 2) + "px " + (20 + noClickCount * 2) + "px";
+            }
+
+            if (noClickCount === noText.length) {
+                setTimeout(() => {
+                    noBtn.style.display = "none";
+                }, 100);
+            }
+        });
+
+        yesBtn.addEventListener('click', () => {
+            textElement.style.display = "none";
+            console.log("Yes button clicked");
+            imgElement.style.display = "none";
+            buttonContainer.style.display = "none";
+
+            document.body.style.backgroundColor = "";
+
+            let starBackground = document.getElementById("star-background");
+            if (!starBackground) {
+                starBackground = document.createElement("div");
+                starBackground.id = "star-background";
+                document.body.appendChild(starBackground);
+
+                Object.assign(starBackground.style, {
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    width: "100vw",
+                    height: "100vh",
+                    backgroundColor: "rgba(18, 18, 18, 0.95)",
+                    zIndex: "-1",
+                    pointerEvents: "none",
+                    overflow: "hidden"
+                });
+
+                const starCount = 80;
+                for (let i = 0; i < starCount; i++) {
+                    const star = document.createElement("div");
+                    star.className = "star";
+                    starBackground.appendChild(star);
+
+                    const size = Math.random() * 2 + 1 + "px";
+                    const left = Math.random() * 100 + "vw";
+                    const top = Math.random() * 100 + "vh";
+                    const delay = Math.random() * 3 + "s";
+                    const duration = (Math.random() * 2 + 1) + "s";
+                    star.style.cssText = `
+        position: absolute;
+        width: ${size};
+        height: ${size};
+        background: white;
+        border-radius: 50%;
+        left: ${left};
+        top: ${top};
+        opacity: 0;
+        animation: starBlink ${duration} ease-in-out infinite;
+        animation-delay: ${delay};
+      `;
+                }
+            }
+
+            //Sửa lời nhắn hiển thị chữ rơi ở đây
+            const fallingWords = [" ❤", "Em yêu anh", "Mãi yêu anh", "Anh mãi là của em"];
+
+            const layers = [
+                { fontSize: 32, opacity: 1, duration: 4, positions: [] },
+                { fontSize: 24, opacity: 0.8, duration: 5, positions: [] },
+                { fontSize: 20, opacity: 0.7, duration: 6, positions: [] },
+                { fontSize: 16, opacity: 0.6, duration: 7, positions: [] },
+                { fontSize: 12, opacity: 0.5, duration: 8, positions: [] }
+            ];
+
+            function isPositionValid(positions, left) {
+                return positions.every(pos => Math.abs(pos - left) > 8);
+            }
+
+            const interval = setInterval(() => {
+                const span = document.createElement("span");
+                span.className = "falling-text";
+                span.textContent = fallingWords[Math.floor(Math.random() * fallingWords.length)];
+
+                const layerIndex = Math.floor(Math.random() * layers.length);
+                const layer = layers[layerIndex];
+
+                let left;
+                let attempts = 0;
+                do {
+                    left = Math.random() * 100;
+                    attempts++;
+                    if (attempts > 30) break;
+                } while (!isPositionValid(layer.positions, left));
+
+                layer.positions.push(left);
+
+                span.style.left = left + "vw";
+                span.style.fontSize = layer.fontSize + "px";
+                span.style.opacity = layer.opacity;
+                span.style.animationDuration = layer.duration + "s";
+                span.style.transformStyle = "preserve-3d";
+
+                document.body.appendChild(span);
+
+                setTimeout(() => {
+                    span.remove();
+                    const index = layer.positions.indexOf(left);
+                    if (index > -1) {
+                        layer.positions.splice(index, 1);
+                    }
+                }, layer.duration * 1000 + 500);
+            }, 100);
+        });
+
+    </script>
+
+</body>
+
+</html>
